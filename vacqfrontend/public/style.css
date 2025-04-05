@@ -1,0 +1,16 @@
+h1 {
+    background-color: #ff0000; /* Red */
+}
+
+h2 {
+    background-color: #0000ff; /* Blue */
+}
+
+h3 {
+    background-color: #00ff00; /* Green */
+}
+
+em {
+    background-color: #0000ff; /* Black */
+    color: #ffffff; /* White */
+}
