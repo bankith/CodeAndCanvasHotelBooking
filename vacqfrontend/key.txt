@@ -1,4 +1,0 @@
-java -jar pepk.jar --keystore=bsgglassget.keystore --alias=bsgglassget --output=encrypted_private_key_path --rsa-aes-encryption --encryption-key-path=encryption_public_key.pem
-
-
-Pass: 1qazxsw2
