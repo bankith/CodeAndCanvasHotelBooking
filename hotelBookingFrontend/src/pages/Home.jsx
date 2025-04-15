@@ -15,7 +15,7 @@ function Home() {
         <>
         <div style={{ position: "relative", width: "100vw", height: "100vh" }}>
             <iframe
-            src="/gmap.html?center=21.2793633,-157.8323484,75&tilt=80&heading=180&range=1500&mode=hybrid"           
+            src="/gmap.html?lat=21.2793633&long=-157.8323484&tilt=80&heading=180&range=1500&mode=hybrid"           
             style={{
                 position: "absolute",
                 top: 0,
@@ -35,7 +35,7 @@ function Home() {
                         left: "50%",
                         transform: "translate(-50%, -50%)"}}>
 
-                        <div className="max-w-sm rounded shadow-2xl p-10" style={{backdropFilter: "blur(5px)"}}>
+                        <div className="max-w-sm rounded shadow-2xl p-10" style={{backdropFilter: "blur(15px)"}}>
                         <div>                      
                             {/* <img
                                 alt="Your Company"
@@ -61,7 +61,7 @@ function Home() {
                                     required
                                     placeholder='Email'
                                     autoComplete="email"
-                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6"
+                                    className="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6"
                                     />
                                 </div>
                                 </div>
@@ -75,7 +75,7 @@ function Home() {
                                     placeholder='Password'
                                     required
                                     autoComplete="current-password"
-                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6"
+                                    className="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6"
                                     />
                                 </div>
                                 </div>

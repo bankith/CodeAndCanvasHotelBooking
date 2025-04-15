@@ -14,10 +14,19 @@
         height: 400px;
       } */
     </style>
-    <script
+    <!-- <script
     async
     defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgcp_savJ7u7zltnlhVGGlU6Nuv_OMNF4&v=alpha&libraries=maps3d"></script>
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgcp_savJ7u7zltnlhVGGlU6Nuv_OMNF4&v=alpha&libraries=maps3d"></script> -->
+
+    <script>
+      (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+        key: "AIzaSyCgcp_savJ7u7zltnlhVGGlU6Nuv_OMNF4",
+        v: "alpha",
+        // Use the 'v' parameter to indicate the version to use (weekly, beta, alpha, etc.).
+        // Add other bootstrap parameters as needed, using camel case.
+      });
+    </script>
   </head>
   <body>
     <div id="map-container" style="width: 100%; height: 100%"></div>
@@ -29,21 +38,57 @@
       const mapId = "YOUR_MAP_ID"; // hardcoded or pass as param too
 
       // Wait for the web component to be defined
-      customElements.whenDefined("gmp-map-3d").then(() => {
-        const el = document.createElement("gmp-map-3d");
-        el.style.width = "100%";
-        el.style.height = "100%";
+      // customElements.whenDefined("gmp-map-3d").then(() => {
+      //   const el = document.createElement("gmp-map-3d");
+      //   el.style.width = "100%";
+      //   el.style.height = "100%";
 
-        // Pull from URL params or fallback defaults
-        el.setAttribute("center", params.get("center") || "37.7749,-122.4194,100");
-        el.setAttribute("tilt", params.get("tilt") || "45");
-        el.setAttribute("heading", params.get("heading") || "90");
-        el.setAttribute("range", params.get("range") || "500");
-        el.setAttribute("mode", params.get("mode") || "hybrid");
-        el.setAttribute("map-id", mapId);
+      //   // Pull from URL params or fallback defaults
+      //   el.setAttribute("center", params.get("lat") || "37.7749,-122.4194,100");
+      //   el.setAttribute("tilt", params.get("tilt") || "45");
+      //   el.setAttribute("heading", params.get("heading") || "90");
+      //   el.setAttribute("range", params.get("range") || "500");
+      //   el.setAttribute("mode", params.get("mode") || "hybrid");
+      //   el.setAttribute("map-id", mapId);
 
-        document.getElementById("map-container").appendChild(el);
-      });
+      //   document.getElementById("map-container").appendChild(el);
+      // });
+
+      async function init() {
+        const { Map3DElement, MapMode } = await google.maps.importLibrary("maps3d");
+
+        const map = new Map3DElement({
+          center: { lat: 13.7375762, lng: 100.5236859, altitude: 0 },
+          tilt: 67.5,
+          range: 200000,          
+          mode: MapMode.HYBRID
+        });
+
+        // document.body.append(map);
+        document.getElementById("map-container").appendChild(map);
+
+        const flyToCamera = {
+          center: { lat: parseFloat(params.get("lat")), lng: parseFloat(params.get("long")), altitude: 0 },
+          tilt: parseFloat(params.get("tilt")),
+          heading: parseFloat(params.get("heading")),
+          range: parseFloat(params.get("range")),          
+        };
+
+        map.flyCameraTo({
+          endCamera: flyToCamera,
+          durationMillis: 7000
+        });
+
+        map.addEventListener('gmp-animationend', () => {
+        map.flyCameraAround({
+            camera: flyToCamera,
+            durationMillis: 200000,
+            rounds: 1
+          });
+        }, {once: true});
+      }
+
+      init();
 
       const tryDismiss = () => {
         const btn = Array.from(document.querySelectorAll('button'))
