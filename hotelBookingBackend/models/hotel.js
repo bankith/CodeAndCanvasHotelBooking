@@ -25,6 +25,16 @@ const hotelSchema = new mongoose.Schema({
         required: [true, 'Please add a postal code'],
         maxlength: [5, 'Postal Code can not be more than 5 digits']
     },
+    lat: {
+        type: Number,
+        required: [true, 'Please add a latitude code'],
+        maxlength: [11, 'Postal Code can not be more than 10 digits']
+    },
+    long: {
+        type: Number,
+        required: [true, 'Please add a longtitude code'],
+        maxlength: [11, 'Postal Code can not be more than 10 digits']
+    },
     tel: {
         type: String
     },
