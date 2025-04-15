@@ -18,27 +18,6 @@ connectDB();
 
 
 const app = express();
-const swaggerJsDoc = require('swagger-jsdoc');
-const swaggerUI = require('swagger-ui-express');
-
-const swaggerOptions={
-    swaggerDefinition:{
-        openapi: '3.0.0',
-        info: {
-            title: 'Library API',
-            version: '1.0.0',
-            description: 'A simple Express VacQ API'    
-        },
-        servers: [
-            {
-            url: 'http://localhost:3000/api/v1'
-            }
-        ],
-    },
-    apis:['./routes/*.js'],
-};
-const swaggerDocs=swaggerJsDoc(swaggerOptions);
-app.use('/api-docs',swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
 app.use(cors());
 // Body parser
@@ -48,8 +27,8 @@ app.use(cookieParser());
 app.use(helmet());
 app.use(xss());
 const limiter=rateLimit({
-    windowsMs:10*60*1000,//10 mins
-    max: 100
+    windowsMs:1*60*1000,
+    max: 1000
     });
 app.use(limiter);
 app.use(hpp());
