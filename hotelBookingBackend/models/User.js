@@ -16,6 +16,14 @@ const UserSchema = new mongoose.Schema({
             'Please add a valid email'
         ]
     },
+    telephone: {
+        type: String,
+        required: [true, 'Please add a telephone number'],
+        match: [
+            /^[0-9]{9,15}$/,
+            'Please add a valid telephone number'
+        ]
+    },
     role: {
         type: String,
         enum: ['user', 'admin'],
