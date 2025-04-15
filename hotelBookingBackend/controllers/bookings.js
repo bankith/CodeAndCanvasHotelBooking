@@ -110,13 +110,7 @@ exports.addbooking = async (req, res, next) => {
 // @access Private
 exports.updatebooking = async (req, res, next) => {
     try {
-
-
-  
-
         let theBooking = await booking.findById(req.params.id);
-
-    
 
         if (!theBooking) {
             return res.status(404).json({ success: false, message: 'No booking with the id of ' + req.params.id });

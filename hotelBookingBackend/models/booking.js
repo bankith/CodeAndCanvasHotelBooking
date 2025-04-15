@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const QRCode = require('qrcode');
 
 const bookingSchema = new mongoose.Schema({
     bookingDate: {
@@ -15,9 +16,30 @@ const bookingSchema = new mongoose.Schema({
         ref: 'hotel',
         required: true
     },
+    qrCodeImage: {
+        type: String // base64 PNG
+    },
     createdAt: {
         type: Date,
         default: Date.now
+    }
+});
+
+// ก่อนบันทึก booking → สร้าง QR code
+bookingSchema.pre('save', async function (next) {
+    // ป้องกันไม่ให้สร้าง QR ใหม่ซ้ำเมื่อมีอยู่แล้ว
+    if (this.qrCodeImage) return next();
+
+    try {
+        // URL
+        const url = `http://localhost:3080/api/v1/bookings/${this._id}`;
+        const qrImage = await QRCode.toDataURL(url); // สร้าง QR code เป็น base64 image
+
+        this.qrCodeImage = qrImage;
+        next();
+    } catch (err) {
+        console.error("Error generating QR Code:", err);
+        next(err);
     }
 });
 
