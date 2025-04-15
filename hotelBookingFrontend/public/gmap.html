@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Photorealistic 3D Maps in Maps JavaScript Simple Map Demo</title>
+    <style>
+      html,
+      body {
+        height:100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* gmp-map-3d {
+        height: 400px;
+      } */
+    </style>
+    <script
+    async
+    defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgcp_savJ7u7zltnlhVGGlU6Nuv_OMNF4&v=alpha&libraries=maps3d"></script>
+  </head>
+  <body>
+    <div id="map-container" style="width: 100%; height: 100%"></div>
+
+    <script>
+      // Helper to read URL params
+      const params = new URLSearchParams(window.location.search);
+
+      const mapId = "YOUR_MAP_ID"; // hardcoded or pass as param too
+
+      // Wait for the web component to be defined
+      customElements.whenDefined("gmp-map-3d").then(() => {
+        const el = document.createElement("gmp-map-3d");
+        el.style.width = "100%";
+        el.style.height = "100%";
+
+        // Pull from URL params or fallback defaults
+        el.setAttribute("center", params.get("center") || "37.7749,-122.4194,100");
+        el.setAttribute("tilt", params.get("tilt") || "45");
+        el.setAttribute("heading", params.get("heading") || "90");
+        el.setAttribute("range", params.get("range") || "500");
+        el.setAttribute("mode", params.get("mode") || "hybrid");
+        el.setAttribute("map-id", mapId);
+
+        document.getElementById("map-container").appendChild(el);
+      });
+
+      const tryDismiss = () => {
+        const btn = Array.from(document.querySelectorAll('button'))
+          .find(el => el.textContent === 'Dismiss');
+        if (btn) {
+          btn.click();
+          console.log('Dismissed development popup ✅');
+        } else {
+          setTimeout(tryDismiss, 200); // try again in 200ms
+        }
+      };
+
+      tryDismiss();
+
+    </script>
+  </body>
+</html>
