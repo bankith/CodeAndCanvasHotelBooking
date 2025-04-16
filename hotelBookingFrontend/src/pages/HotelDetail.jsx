@@ -40,18 +40,24 @@ function HotelDetail() {
 
     return (
         <>
-            <section className="heading">
-                {/* <img src={myPic} alt="My Pic" /> */}
-                            Test
-            </section>
             {theHotel ? 
-            <div className="max-w-4xl mx-auto p-4">
-                {/* Big profile image */}
-                <img
-                    src={theHotel.profileimageurl}
-                    alt={theHotel.name}
-                    className="w-full h-80 object-cover rounded-xl shadow-md"
+            <div className="mx-auto">
+                <iframe
+                src={"/gmap.html?name=" + theHotel.name + "&time=2000&animation=false&lat=" + theHotel.lat + "&long=" + theHotel.long + "&tilt=65&heading=-30&range=350&mode=hybrid"}
+                className="w-full h-125 shadow-md"
+                // style={{
+                //     position: "absolute",
+                //     top: 0,
+                //     left: 0,
+                //     width: "100%",
+                //     height: "100vh",
+                //     border: "none",
+                //     zIndex: 0, // background layer
+                // }}
+                title="3D Google Map"
                 />
+                {/* Big profile image */}
+
 
                 {/* Info */}
                 <div className="mt-6 text-center space-y-2">

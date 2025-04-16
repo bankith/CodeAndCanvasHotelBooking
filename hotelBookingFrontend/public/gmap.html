@@ -55,7 +55,7 @@
       // });
 
       async function init() {
-        const { Map3DElement, MapMode } = await google.maps.importLibrary("maps3d");
+        const { Map3DElement, MapMode, Marker3DElement } = await google.maps.importLibrary("maps3d");
 
         const map = new Map3DElement({
           center: { lat: 13.7375762, lng: 100.5236859, altitude: 0 },
@@ -66,9 +66,10 @@
 
         // document.body.append(map);
         document.getElementById("map-container").appendChild(map);
-
+        // alert(parseFloat(params.get("lat")))
         const flyToCamera = {
-          center: { lat: parseFloat(params.get("lat")), lng: parseFloat(params.get("long")), altitude: 0 },
+          // center: { lat: parseFloat(params.get("lat")), lng: parseFloat(params.get("long")), altitude: 0 },
+          center: { lat: 35.6529, lng: 139.7512, altitude: 0 },
           tilt: parseFloat(params.get("tilt")),
           heading: parseFloat(params.get("heading")),
           range: parseFloat(params.get("range")),          
@@ -76,17 +77,31 @@
 
         map.flyCameraTo({
           endCamera: flyToCamera,
-          durationMillis: 7000
+          durationMillis: parseInt(params.get("time"))
         });
 
         map.addEventListener('gmp-animationend', () => {
-        map.flyCameraAround({
-            camera: flyToCamera,
-            durationMillis: 200000,
-            rounds: 1
+          if(params.get("animation") == "false"){
+            return;
+          }
+          map.flyCameraAround({
+              camera: flyToCamera,
+              durationMillis: 200000,
+              rounds: 1
+            });
+          }, {once: true});
+
+
+          const marker = new Marker3DElement({
+            position: { lat: parseFloat(params.get("lat")), lng: parseFloat(params.get("long")) },
+            drawsWhenOccluded: true,
+            label: params.get("name")
           });
-        }, {once: true});
-      }
+          map.append(marker);
+
+        }
+
+        
 
       init();
 

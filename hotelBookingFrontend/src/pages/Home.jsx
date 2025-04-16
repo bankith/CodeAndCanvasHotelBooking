@@ -50,7 +50,7 @@ function Home() {
         <>
         <div style={{ position: "relative", width: "100vw", height: "100vh" }}>
             <iframe
-            src="/gmap.html?lat=21.2793633&long=-157.8323484&tilt=80&heading=180&range=1500&mode=hybrid"           
+            src="/gmap.html?time=7000&lat=21.2793633&long=-157.8323484&tilt=80&heading=180&range=1500&mode=hybrid"           
             style={{
                 position: "absolute",
                 top: 0,
