@@ -5,6 +5,8 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Main from './pages/Main';
+import HotelDetail from './pages/HotelDetail';
 
 function App() {
     return (
@@ -14,8 +16,8 @@ function App() {
                     {/* <Header /> */}
                     <Routes>
                         <Route path='/' element={<Home />} />
-                        <Route path='/login' element={<Login />} />
-                        <Route path='/register' element={<Register />} />
+                        <Route path='/main' element={<Main />} />
+                        <Route path="/main/hotels/:id" element={<HotelDetail />} />
                     </Routes>
                 </div>
             </Router>

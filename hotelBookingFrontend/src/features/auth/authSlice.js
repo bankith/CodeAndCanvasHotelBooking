@@ -6,6 +6,7 @@ const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('use
 
 const initialState = {
     user: user,
+    hotels: [],
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -30,6 +31,18 @@ export const register = createAsyncThunk('auth/register', async (user, thunkAPI)
 export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
     try {
         return await authService.login(user);
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) ||
+                        error.message || 
+                        error.toString();
+        return thunkAPI.rejectWithValue(message);
+    }
+});
+
+// Get All Hotels
+export const getAllHotels = createAsyncThunk('hotels', async (user, thunkAPI) => {
+    try {
+        return await authService.getAllHotels();
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) ||
                         error.message || 
@@ -77,7 +90,7 @@ export const authSlice = createSlice({
             })
             .addCase(login.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.isSuccess = true;
+                state.isSuccess = true;                
                 state.user = action.payload;
             })
             .addCase(login.rejected, (state, action) => {
@@ -88,6 +101,16 @@ export const authSlice = createSlice({
             })
             .addCase(logout.fulfilled, (state) => {
                 state.user = null;
+            })
+            .addCase(getAllHotels.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = false;                
+                state.hotels = [];
+            })
+            .addCase(getAllHotels.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;                
+                state.hotels = action.payload.data;
             })
             
     }
