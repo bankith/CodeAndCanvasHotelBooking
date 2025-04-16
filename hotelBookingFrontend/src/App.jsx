@@ -3,8 +3,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from './components/Header';
 import Home from './pages/Home';
-import Login from './pages/Login';
-import Register from './pages/Register';
 import Main from './pages/Main';
 import HotelDetail from './pages/HotelDetail';
 

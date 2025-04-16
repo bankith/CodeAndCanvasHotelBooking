@@ -22,16 +22,6 @@ const login = async (userData) => {
     return response.data;
 }
 
-// Login user
-const getAllHotels = async (userData) => {
-    const response = await axios.get(API_URL + 'hotels');
-    if (response.data) {
-        
-    }
-    console.log(response.data);
-    return response.data;
-}
-
 // Logout user
 const logout = () => {
     localStorage.setItem('user', null);
@@ -41,7 +31,6 @@ const authService = {
     register,
     logout,
     login,
-    getAllHotels,
 }
 
 export default authService;

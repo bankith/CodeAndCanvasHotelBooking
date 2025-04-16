@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { FaSignInAlt } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
-import { login, reset, getAllHotels } from '../features/auth/authSlice';
-import myPic from '/src/assets/react.svg';
+import { login, reset } from '../features/auth/authSlice';
+import { getAllHotels } from '../features/hotel/hotelSlice';
 
 function Main() {
 
@@ -13,7 +13,9 @@ function Main() {
 
     const [allHotels, setAllHotels] = useState([]);
 
-    const { user, isLoading, isError, isSuccess, message, hotels } = useSelector((state) => state.auth);
+    const { user } = useSelector((state) => state.auth);
+
+    const { isLoading, isError, isSuccess, message, hotels } = useSelector((state) => state.hotel);
     
 
     const handleViewDetails = (id) => {
@@ -21,6 +23,7 @@ function Main() {
     };
 
     useEffect(() => {
+        
         dispatch(getAllHotels());
     }, []);
 
@@ -66,7 +69,7 @@ function Main() {
                 {/* <img src={myPic} alt="My Pic" /> */}
                             
             </section>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6 mt-10">
                 {allHotels.map(hotel => (
                 <div
                     key={hotel.id}

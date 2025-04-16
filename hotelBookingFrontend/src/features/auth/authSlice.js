@@ -7,6 +7,7 @@ const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('use
 const initialState = {
     user: user,
     hotels: [],
+    hotel: null,
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -39,17 +40,6 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
     }
 });
 
-// Get All Hotels
-export const getAllHotels = createAsyncThunk('hotels', async (user, thunkAPI) => {
-    try {
-        return await authService.getAllHotels();
-    } catch (error) {
-        const message = (error.response && error.response.data && error.response.data.message) ||
-                        error.message || 
-                        error.toString();
-        return thunkAPI.rejectWithValue(message);
-    }
-});
 
 // Logout user
 export const logout = createAsyncThunk('auth/logout', async () => {
@@ -67,6 +57,8 @@ export const authSlice = createSlice({
             state.isSuccess = false;
             state.message = '';
             state.user = null;
+            // state.hotels = [];
+            // state.hotel = null;
         }
     },
     extraReducers: (builder) => {
@@ -101,16 +93,6 @@ export const authSlice = createSlice({
             })
             .addCase(logout.fulfilled, (state) => {
                 state.user = null;
-            })
-            .addCase(getAllHotels.rejected, (state, action) => {
-                state.isLoading = false;
-                state.isSuccess = false;                
-                state.hotels = [];
-            })
-            .addCase(getAllHotels.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.isSuccess = true;                
-                state.hotels = action.payload.data;
             })
             
     }
