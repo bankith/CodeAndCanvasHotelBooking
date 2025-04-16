@@ -25,8 +25,8 @@ function Home() {
             toast.error(message);
         }
 
-        if (isSuccess || user) {
-            navigate('/');
+        if (isSuccess) {
+            navigate('/main');
         }
 
         dispatch(reset());
@@ -40,7 +40,7 @@ function Home() {
     };
 
     const onSubmit = (e) => {
-        e.preventDefault();
+        e.preventDefault();        
         const userData = { email, password };
         dispatch(login(userData));
     };
@@ -59,24 +59,19 @@ function Home() {
                 height: "100vh",
                 border: "none",
                 zIndex: 0, // background layer
-                // pointerEvents: "none", // make it unclickable!
               }}
             title="3D Google Map"
             />
 
-                {/* <div style={{ position: "relative", zIndex: 1, color: "#fff", padding: "2rem" }}> */}
-                    <div style={{position: "absolute",
+                
+                    <div className="text-white" style={{position: "absolute",
                         top: "50%",
                         left: "50%",
-                        transform: "translate(-50%, -50%)"}}>
+                        transform: "translate(-50%, -50%)",
+                        }}>
 
-                        <div className="max-w-sm rounded shadow-2xl p-10" style={{backdropFilter: "blur(15px)"}}>
-                        <div>                      
-                            {/* <img
-                                alt="Your Company"
-                                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=blue&shade=600"
-                                className="mx-auto h-10 w-auto"
-                            /> */}
+                        <div className="max-w-sm rounded shadow-2xl p-10 min-w-sm" style={{backdropFilter: "blur(15px)"}}>
+                        <div>      
                             <h2 className="text-center text-5xl font-bold tracking-tight text-white tracking-widest font-mono">
                                 Hotel
                             </h2>
@@ -97,7 +92,7 @@ function Home() {
                                     placeholder='Email'
                                     autoComplete="email"
                                     value={email} onChange={onChange}
-                                    className="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6"
+                                    className="block w-full rounded-md px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-white placeholder:text-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6"
                                     />
                                 </div>
                                 </div>
@@ -112,7 +107,7 @@ function Home() {
                                     required
                                     value={password} onChange={onChange}
                                     autoComplete="current-password"
-                                    className="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6"
+                                    className="block w-full rounded-md px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-white placeholder:text-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6"
                                     />
                                 </div>
                                 </div>
@@ -122,7 +117,7 @@ function Home() {
                                     type="submit"
                                     className="flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-primaryHover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                                 >
-                                    Sign in
+                                    Log in
                                 </button>
                                 </div>
                             </form>
@@ -132,7 +127,6 @@ function Home() {
                         
                        
                     </div>
-                {/* </div> */}
             </div>
             {/* <section className="heading">
                 <h1>

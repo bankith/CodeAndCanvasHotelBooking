@@ -38,6 +38,9 @@ const hotelSchema = new mongoose.Schema({
     tel: {
         type: String
     },
+    profileimageurl: {
+        type: String
+    },
     region: {
         type: String,
         required: [true, 'Please add a region']
