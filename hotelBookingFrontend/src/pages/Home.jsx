@@ -1,14 +1,49 @@
 import { Link } from 'react-router-dom';
 import { FaQuestionCircle, FaTicketAlt } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
 import {useState, useEffect, useRef} from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { FaSignInAlt } from 'react-icons/fa';
+import { useSelector, useDispatch } from 'react-redux';
+import { login, reset } from '../features/auth/authSlice';
 
 
-function Home() {
-    const { user } = useSelector((state) => state.auth);
-    const [mapReady, setMapReady] = useState(false);
-    const containerRef = useRef(null);
-      
+function Home() {    
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+    });
+
+    const { email, password } = formData;
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        if (isError) {
+            toast.error(message);
+        }
+
+        if (isSuccess || user) {
+            navigate('/');
+        }
+
+        dispatch(reset());
+    }, [isError, isSuccess, user, message, navigate, dispatch]);
+
+    const onChange = (e) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value
+        }));
+    };
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        const userData = { email, password };
+        dispatch(login(userData));
+    };
 
 
     return (
@@ -51,7 +86,7 @@ function Home() {
                             </div>
 
                             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                            <form action="#" method="POST" className="space-y-6">
+                            <form onSubmit={onSubmit} className="space-y-6">
                                 <div>                               
                                 <div className="mt-2">
                                     <input
@@ -61,6 +96,7 @@ function Home() {
                                     required
                                     placeholder='Email'
                                     autoComplete="email"
+                                    value={email} onChange={onChange}
                                     className="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6"
                                     />
                                 </div>
@@ -74,6 +110,7 @@ function Home() {
                                     type="password"
                                     placeholder='Password'
                                     required
+                                    value={password} onChange={onChange}
                                     autoComplete="current-password"
                                     className="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6"
                                     />
