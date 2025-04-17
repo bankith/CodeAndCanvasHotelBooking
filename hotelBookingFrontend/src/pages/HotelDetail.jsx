@@ -58,23 +58,33 @@ function HotelDetail() {
     const handleBooking = async () => {
         const currentUser = user || JSON.parse(localStorage.getItem('user'));
         if (!currentUser) {
-            toast.error('You must be logged in to book.');
-            return;
+          toast.error('You must be logged in to book.');
+          return;
         }
-
+      
         const res = await dispatch(createBooking({
-            hotelId: id,
-            bookingDate: bookingDate.toISOString(),
-            userId: currentUser._id,
+          hotelId: id,
+          bookingDate: bookingDate.toISOString(),
+          userId: currentUser._id,
         }));
-
-        if (res.payload?.data?._id) {
-            const detailRes = await dispatch(getBooking(res.payload.data._id));
-            if (detailRes.payload?.data) {
-                setBookingDetail(detailRes.payload.data);
-            }
+      
+        // ✅ Check if the action was rejected
+        if (createBooking.rejected.match(res)) {
+          const errorMsg =
+            res.payload || res.error?.message || 'Booking failed due to server error';
+          toast.error(errorMsg);
+          return;
         }
-    };
+      
+        // ✅ Booking created
+        if (res.payload?.data?._id) {
+          const detailRes = await dispatch(getBooking(res.payload.data._id));
+          if (detailRes.payload?.data) {
+            setBookingDetail(detailRes.payload.data);
+            setIsModalOpen(true); // open modal if it closed
+          }
+        }
+      };
 
     return (
         <>
