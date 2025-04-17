@@ -32,7 +32,7 @@ bookingSchema.pre('save', async function (next) {
 
     try {
         // URL
-        const url = `http://localhost:3080/api/v1/bookings/${this._id}`;
+        const url = `http://localhost:3000/bookings/${this._id}`;
         const qrImage = await QRCode.toDataURL(url); // สร้าง QR code เป็น base64 image
 
         this.qrCodeImage = qrImage;
