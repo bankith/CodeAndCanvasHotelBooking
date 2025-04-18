@@ -68,8 +68,8 @@
         document.getElementById("map-container").appendChild(map);
         // alert(parseFloat(params.get("lat")))
         const flyToCamera = {
-          // center: { lat: parseFloat(params.get("lat")), lng: parseFloat(params.get("long")), altitude: 0 },
-          center: { lat: 35.6529, lng: 139.7512, altitude: 0 },
+          center: { lat: parseFloat(params.get("lat")), lng: parseFloat(params.get("long")), altitude: 0 },
+          // center: { lat: 35.6529, lng: 139.7512, altitude: 0 },
           tilt: parseFloat(params.get("tilt")),
           heading: parseFloat(params.get("heading")),
           range: parseFloat(params.get("range")),          

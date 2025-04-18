@@ -10,7 +10,7 @@ exports.getbookings = async (req, res, next) => {
     if (req.user.role != 'admin') { // General users can see only their bookings!
         query = booking.find({ user: req.user.id }).populate({
             path: 'hotel',
-            select: 'name province tel'
+            select: 'name address tel'
         });
     } else { // If you are an admin, you can see all bookings!
         
@@ -18,12 +18,12 @@ exports.getbookings = async (req, res, next) => {
             console.log(req.params.hotelId);
             query = booking.find({ hotel: req.params.hotelId }).populate({
                 path: 'hotel',
-                select: 'name province tel'
+                select: 'name address tel'
             });
         } else {
             query = booking.find().populate({
                 path: 'hotel',
-                select: 'name province tel'
+                select: 'name address tel'
             });
         }
     }
@@ -49,7 +49,7 @@ exports.getbooking = async (req, res, next) => {
     try {
         const theBooking = await booking.findById(req.params.id).populate({
             path: 'hotel',
-            select: 'name description tel'
+            select: 'name description tel address'
         });
 
         if (!theBooking) {
