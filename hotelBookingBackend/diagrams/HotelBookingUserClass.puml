@@ -1,0 +1,50 @@
+@startuml
+left to right direction
+package "HotelBooking"{
+    class "<<Application>>\nHotelBookingService" as HotelBookingService{}
+
+    
+    ' class "<<Resource>>\nme" as ResourceMe{
+    '     <<POST>> +me():user        
+    ' }  
+
+    class "<<Resource>>\nlogout" as ResourceLogout{
+        <<GET>> +logout():void
+    }  
+
+    class "<<Resource>>\nlogin" as ResourceLogin{
+        <<POST>> +login():user
+    }
+
+    class "<<Resource>>\nregister" as ResourceRegister{
+        <<POST>> +register():user        
+    }
+
+    class "<<Representation>>\nUser" as RepresentationUser {
+        -name
+        -email
+        -telephone
+        -role
+        -password
+        -createdAt
+    }
+
+}
+
+
+
+
+
+HotelBookingService ..> ResourceLogin:"/api/v1/auth/login\n<<Path>>"
+ResourceLogin ..> RepresentationUser: "<<use>>"
+
+HotelBookingService ..> ResourceLogout:"/api/v1/auth/logout\n<<Path>>"
+ResourceLogout ..> RepresentationUser: "<<use>>"
+
+' HotelBookingService ..> ResourceMe:"/api/v1/auth/me\n<<Path>>"
+' ResourceMe ..> RepresentationUser: "<<use>>"
+
+HotelBookingService ..> ResourceRegister: "/api/v1/auth/register\n<<Path>>"
+ResourceRegister ..> RepresentationUser: "<<use>>"
+
+@enduml
