@@ -1,0 +1,25 @@
+@startuml Manage Booking (PUT)
+
+header Hotel Booking Sequence Diagram
+footer Page %page% of %lastpage%
+title "Manage Booking (PUT)"
+
+participant "Client" as client
+participant "<<javaScript>>\n:server" as server
+participant "<<router>>\n:bookings" as routerBookings
+participant "<<controllers>>\n:bookings" as controllersBookings
+participant "<<model>>\n:booking" as modelBooking
+database "<<MongoDB>>\n:bookings" as BookingsDatabase
+
+client->server ++:req.put('/api/v1/bookings/:id')
+server->routerBookings ++:app.use('/api/v1/bookings',bookings)
+routerBookings -> controllersBookings ++:updatebooking()
+
+controllersBookings->modelBooking ++:findByIdAndUpdate(req.params.id, req.body)
+modelBooking ->BookingsDatabase ++: BookingSchema
+BookingsDatabase --> modelBooking --: booking
+controllersBookings <-- modelBooking --:booking
+
+controllersBookings->client --:response
+
+@enduml

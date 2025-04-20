@@ -1,0 +1,33 @@
+@startuml
+left to right direction
+package "HotelBooking"{
+    class "<<Application>>\nHotelBookingService" as HotelBookingService{}
+
+    class "<<Resource>>\nHotels" as ResourceHotels{
+        <<GET>> +gethotels():htels
+        <<POST>> +createhotel():hotel
+    }
+
+    class "<<Resource>>\nHotel" as ResourceHotel {
+        <<GET>> +gethotel(): hotel
+        <<PUT>> +updatehotel(): hotel
+        <<DELETE>> +deletehotel(): void
+    }
+
+    class "<<Representation>>\nHotel" as RepresentationHotel {
+        -name
+        -address
+        -district
+        -province
+        -postalcode
+        -tel
+        -region
+    }
+
+}
+
+HotelBookingService ..> ResourceHotels:"/api/v1/hotels\n<<Path>>"
+ResourceHotels ..> ResourceHotel: "/{id}\n<<Path>>"
+ResourceHotel ..> RepresentationHotel: "<<use>>"
+
+@enduml
