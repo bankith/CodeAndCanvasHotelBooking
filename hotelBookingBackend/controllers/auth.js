@@ -23,7 +23,7 @@ exports.register = async (req, res, next) => {
         sendTokenResponse(user, 200, res);
     } catch (err) {
         const messages = Object.values(err.errors).map(val => val.message);
-        res.status(400).json({ success: false, message: messages[0] });
+        res.status(400).json({ success: false, messages: messages.join(', ') });
         console.log(err.stack);
     }
 };
