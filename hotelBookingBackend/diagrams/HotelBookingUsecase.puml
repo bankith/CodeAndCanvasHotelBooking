@@ -2,6 +2,7 @@
 left to right direction
 actor "User" as user
 rectangle "Hotel Booking System" as VacQSystem {    
+    usecase "Authentication" as authenHotels
     usecase "Register" as register
     usecase "View\nHotels" as viewHotels
     usecase "Manage\nBookings" as manageBooking
@@ -11,10 +12,12 @@ rectangle "Hotel Booking System" as VacQSystem {
 user -- register
 user -- viewHotels
 user -- manageBooking
+user -- authenHotels
 
 actor "Admin" as admin
 register -- admin
 manageHotels -- admin
 manageBooking -- admin
+authenHotels -- admin
 
 @enduml
